@@ -1,3 +1,6 @@
+const fs = require('fs');
+// This calls upon the function 'generatePage' from page-template.js to be used in THIS code
+const generatePage = require('./src/page-template');
 const inquirer = require('inquirer');
 
 const promptUser = () => {
@@ -132,14 +135,25 @@ Add a New Project
   });
 };
 
+// const mockData = {
+//   name: 'Jason',
+//   github: 'Jmuel9999',
+//   projects: []
+// }
+// const pageHTML = generatePage(mockData);
+
 promptUser()
   .then(promptProject)
   .then(portfolioData => {
-    console.log(portfolioData);
+    const pageHTML = generatePage(portfolioData);
+
+    fs.writeFile('./index.html', pageHTML, err => {
+      if (err) throw new Error(err);
+
+    console.log('Page created! Check out index.html in this directory to see it!');
+    });
   });
-// const fs = require('fs');
-// // This calls upon the function 'generatePage' from page-template.js to be used in THIS code
-// const generatePage = require('./src/page-template');
+
 
 // const pageHTML = generatePage(name, github);
 
